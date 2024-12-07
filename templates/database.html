@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Database{% endblock %}
+
+{% block content %}
+<div class="container">
+        {% if success %}
+            <h1>Database Connection Successful!</h1>
+            <img class="homeImg" src="../static/mysql-graphic.webp" alt="Mysql">
+            <br>
+            <p>The content below is being dynamically populated from the MySql database.</p>
+            <p><strong>{{ name }}</strong> says: "{{ content }}"</p>
+            <br>
+            <p>Here are some more details about the database</p>
+            <p><b>Host: {{ db_host }}</b></p>
+            <p><b>Version: {{ versionQuery }}</b></p>
+        {% else %}
+            <h1>Error</h1>
+            <p>{{ error }}</p>
+        {% endif %}
+</div>
+{% endblock %}
