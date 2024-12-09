@@ -10,6 +10,9 @@ This codebase contains all of the necessary files required to launch a simple Fl
 * DigitalOcean Kubernetes (DOKs) cluster is already [provisioned](https://docs.digitalocean.com/products/kubernetes/getting-started/quickstart/).
 * DOCR + DOks are already [integrated](https://docs.digitalocean.com/products/kubernetes/how-to/integrate-with-docr/).
 
+### Assumptions
+Any environment variable configurations will be handled via [python-dotenv](https://pypi.org/project/python-dotenv/) or [kubectl secrets](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/).
+
 ## Getting Started
 Create a new directory in a location of your choice on your local machine and clone this repository into it. 
 ```
