@@ -63,4 +63,17 @@ Confirm that the load balancer is activated.
 ```
 doctl compute load-balancer list --format Name,Created,IP,Status
 ```
-
+## Troubleshooting
+Confirm that the image exists on DOCR. 
+```
+doctl registry repository list-tags <your-registry-name>/my-python-app
+```
+Check for warnings and error messages in the event log for a particular pod. 
+* You can get the pod name by running `kubectl get pods` and copying the name value listed for a degraded pod.
+```
+kubectl describe pod <pod_name>
+```
+Restart a deployment after fixes have been implemented. 
+```
+kubectl rollout restart deployment my-python-app
+```
