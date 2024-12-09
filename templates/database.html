@@ -12,8 +12,26 @@
             <p><strong>{{ name }}</strong> says: "{{ content }}"</p>
             <br>
             <p>Here are some more details about the database</p>
-            <p><b>Host: {{ db_host }}</b></p>
-            <p><b>Version: {{ versionQuery }}</b></p>
+            {% if status %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Variable</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in status.items() %}
+                    <tr>
+                        <td>{{ key }}</td>
+                        <td>{{ value }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+                {% else %}
+                <p>No status data available.</p>
+                {% endif %}
         {% else %}
             <h1>Error</h1>
             <p>{{ error }}</p>

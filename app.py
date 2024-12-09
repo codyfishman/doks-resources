@@ -29,6 +29,19 @@ DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:25060/{DB_NAM
 
 print(f"Final DATABASE_URL: {DATABASE_URL}")
 
+# Database status helper function
+def fetch_mysql_status():
+    try:
+        with engine.connect() as connection:
+            result = connection.execute(text("SHOW STATUS WHERE Variable_name IN ('uptime', 'connections', 'queries', 'threads_connected', 'threads_running', 'aborted_clients', 'aborted_connects');"))
+            status_dict = {row[0]: row[1] for row in result}
+            if not status_dict:  # Check if the result is empty
+                print("No status data fetched from the database.")
+            return status_dict
+    except Exception as e:
+        print(f"Error fetching MySQL status: {e}")
+        return None
+
 # SSL Configuration (only CA certificate needed)
 ssl_args = {
     'ssl': {
@@ -44,17 +57,13 @@ def hello():
     name = os.getenv("NAME", "Cody")
     # Get the hostname of the machine
     hostname = socket.gethostname()
-    podname = os.getenv("POD NAME", "Unknown Pod")
-    nodename = os.getenv("NODE_NAME", "Unknown Node")
 
     # Pass data to the template
-    return render_template("home.html", name=name, hostname=hostname ,podname=podname, nodename=nodename)
+    return render_template("home.html", name=name, hostname=hostname)
 
 @app.route("/database")
 def show_db_connection():
-    db_host = os.getenv("DB_HOST", "Unknown Host")
-    db_region = os.getenv("DO_REGION", "Unknown Region")
-
+    status_data = fetch_mysql_status()
     try:
         with engine.connect() as connection:
             # Query to fetch the first row's name and content fields
@@ -63,8 +72,8 @@ def show_db_connection():
             # Ensure the query returned a result
             if result:
                 name, content = result[0], result[1]
-                versionQuery = connection.execute(text("SELECT VERSION();")).fetchone()
-                return render_template("database.html", success=True, name=name, content=content, db_host=db_host, db_region=db_region, versionQuery=versionQuery)
+
+                return render_template("database.html", success=True, name=name, content=content, status=status_data)
             else:
                 return render_template("database.html", success=False, error="The table is empty.")
     except Exception as e:

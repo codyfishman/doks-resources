@@ -4,13 +4,11 @@
 
 {% block content %}
 <div class="container">
-    <h1>Welcome to {{ name }}'s Flask App!</h1>
+    <h1>Welcome to Cody's Flask App!</h1>
     <img class="homeImg" src="../static/home-page-img.webp" alt="DO + Flask">
-    <p>Hello, and thank you for checking out this Flask app hosted on Digital Ocean! <br><br>
-    You might be interested to know that this is a containerized application running on Kubernetes. Below you can see some details about the services running this application. </p>
+    <p>Hello, and thank you for checking out this Flask app hosted on DigitalOcean! <br><br>
+    You might be interested to know that this is a containerized application running on Kubernetes. Below is the hostname for the machine serving the request. </p>
     <p><b>Host Name: {{ hostname }}</b></p>
-    <p><b>Node Name: {{ nodename }}</b></p>
-    <p><b>Pod name: {{ podname }}</b></p>
     <br>
     <p> Don't forget to check out my DB connection!</p>
     <br>
